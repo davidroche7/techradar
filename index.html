@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Radar & Asset Registry</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Technology Radar & Asset Registry</h1>
+            <p>Strategic technology adoption view with operational asset details</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('radar')">Tech Radar</button>
+            <button class="nav-tab" onclick="showTab('registry')">Asset Registry</button>
+            <button class="nav-tab" onclick="showTab('integration')">Integration View</button>
+        </div>
+
+        <div class="content">
+            <!-- Tech Radar Tab -->
+            <div id="radar" class="tab-content active">
+                <div class="tech-radar-view">
+                    <div class="radar-container">
+                        <div id="radar-chart"></div>
+                    </div>
+                    
+                    <div class="radar-legend">
+                        <div class="legend-section">
+                            <div class="legend-title">Rings</div>
+                            <div class="legend-item" onclick="filterAssetsByStatus('adopt')">
+                                <div class="legend-dot adopt"></div>
+                                <span>ADOPT - Proven and mature</span>
+                            </div>
+                            <div class="legend-item" onclick="filterAssetsByStatus('trial')">
+                                <div class="legend-dot trial"></div>
+                                <span>TRIAL - Ready for use</span>
+                            </div>
+                            <div class="legend-item" onclick="filterAssetsByStatus('assess')">
+                                <div class="legend-dot assess"></div>
+                                <span>ASSESS - Worth exploring</span>
+                            </div>
+                            <div class="legend-item" onclick="filterAssetsByStatus('hold')">
+                                <div class="legend-dot hold"></div>
+                                <span>HOLD - Proceed with caution</span>
+                            </div>
+                        </div>
+                        
+                        <div class="legend-section">
+                            <div class="legend-title">Quadrants</div>
+                            <div class="legend-item" onclick="filterAssetsByCategory('platforms')">Platforms</div>
+                            <div class="legend-item" onclick="filterAssetsByCategory('tools')">Tools</div>
+                            <div class="legend-item" onclick="filterAssetsByCategory('techniques')">Techniques</div>
+                            <div class="legend-item" onclick="filterAssetsByCategory('languages')">Languages & Frameworks</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asset Registry Tab -->
+            <div id="registry" class="tab-content">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search assets by name, technology, or system..." onkeyup="filterAssets(this.value)">
+                </div>
+                
+                <div class="filters">
+                    <select class="filter-select" onchange="filterByStatus(this.value)">
+                        <option value="">All Statuses</option>
+                        <option value="adopt">Adopt</option>
+                        <option value="trial">Trial</option>
+                        <option value="assess">Assess</option>
+                        <option value="hold">Hold</option>
+                    </select>
+                    
+                    <select class="filter-select" onchange="filterByCategory(this.value)">
+                        <option value="">All Categories</option>
+                        <option value="platforms">Platforms</option>
+                        <option value="tools">Tools</option>
+                        <option value="techniques">Techniques</option>
+                        <option value="languages">Languages & Frameworks</option>
+                    </select>
+                </div>
+                
+                <div class="asset-grid" id="asset-grid">
+                    <!-- Assets will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Integration View Tab -->
+            <div id="integration" class="tab-content">
+                <h2>How Tech Radar & Asset Registry Work Together</h2>
+                <p style="margin-bottom: 2rem;">The Tech Radar provides strategic direction while the Asset Registry gives operational details. Here's how they integrate:</p>
+                
+                <div class="integration-grid">
+                    <div class="integration-card">
+                        <h3>🎯 Tech Radar Benefits</h3>
+                        <ul>
+                            <li>Strategic technology adoption view</li>
+                            <li>Team alignment on technology choices</li>
+                            <li>Risk assessment for technology decisions</li>
+                            <li>Industry best practices adoption</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="integration-card">
+                        <h3>📊 Asset Registry Benefits</h3>
+                        <ul>
+                            <li>Operational visibility into technology usage</li>
+                            <li>Version management and compliance tracking</li>
+                            <li>Impact analysis for technology changes</li>
+                            <li>Resource planning and optimization</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="workflow-section">
+                    <h3>🔄 Integration Workflow</h3>
+                    <ol>
+                        <li><strong>Tech Radar drives adoption</strong> - Technologies move through rings based on strategic assessment</li>
+                        <li><strong>Asset Registry tracks implementation</strong> - Shows where and how technologies are actually used</li>
+                        <li><strong>Feedback loop</strong> - Real-world usage data informs future radar positioning</li>
+                        <li><strong>Compliance monitoring</strong> - Ensures actual usage aligns with strategic direction</li>
+                    </ol>
+                </div>
+                
+                <div class="action-buttons">
+                    <button onclick="showTab('radar')" class="btn-primary">View Tech Radar</button>
+                    <button onclick="showTab('registry')" class="btn-secondary">Browse Asset Registry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/radar.js"></script>
+    <script src="js/assets.js"></script>
+    <script>
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRadarData();
+            loadAssetsData();
+        });
+    </script>
+</body>
+</html>
