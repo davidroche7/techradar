@@ -136,10 +136,10 @@
             position: relative;
             width: 100%;
             margin: 0 auto;
-            background: #ffffff;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #3b82f6 100%);
             border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
 
         #radar-chart {
@@ -885,10 +885,10 @@
                 .attr("r", "50%");
             bgGradient.append("stop")
                 .attr("offset", "0%")
-                .attr("stop-color", "#ffffff");
+                .attr("stop-color", "#3b82f6");
             bgGradient.append("stop")
                 .attr("offset", "100%")
-                .attr("stop-color", "#f8fafc");
+                .attr("stop-color", "#1e40af");
 
             // Background circle
             svg.append("circle")
@@ -897,17 +897,16 @@
                 .attr("r", maxRadius)
                 .attr("fill", "url(#bgGradient)");
 
-            // Draw rings with ThoughtWorks-style appearance
+            // Draw rings with AOE-style appearance
             const rings = [0.3, 0.5, 0.7, 1.0];
-            const ringColors = ["#f7fafc", "#edf2f7", "#e2e8f0", "#cbd5e0"];
             
             rings.forEach((ring, index) => {
                 svg.append("circle")
                     .attr("cx", centerX)
                     .attr("cy", centerY)
                     .attr("r", ring * maxRadius)
-                    .attr("fill", index === 0 ? ringColors[index] : "none")
-                    .attr("stroke", "#cbd5e0")
+                    .attr("fill", "none")
+                    .attr("stroke", "rgba(255,255,255,0.3)")
                     .attr("stroke-width", index === rings.length - 1 ? 3 : 1.5);
             });
 
@@ -917,16 +916,16 @@
                 .attr("y1", 40)
                 .attr("x2", centerX)
                 .attr("y2", height - 40)
-                .attr("stroke", "#cbd5e0")
-                .attr("stroke-width", 3);
+                .attr("stroke", "rgba(255,255,255,0.4)")
+                .attr("stroke-width", 2);
 
             svg.append("line")
                 .attr("x1", 40)
                 .attr("y1", centerY)
                 .attr("x2", width - 40)
                 .attr("y2", centerY)
-                .attr("stroke", "#cbd5e0")
-                .attr("stroke-width", 3);
+                .attr("stroke", "rgba(255,255,255,0.4)")
+                .attr("stroke-width", 2);
 
             // Add quadrant labels with better positioning
             const quadrantLabels = [
@@ -937,50 +936,33 @@
             ];
 
             quadrantLabels.forEach(label => {
-                // Background for text
-                const textBg = svg.append("rect")
-                    .attr("x", label.x - (label.text.length * 4))
-                    .attr("y", label.y - 15)
-                    .attr("width", label.text.length * 8)
-                    .attr("height", 25)
-                    .attr("fill", "rgba(255,255,255,0.9)")
-                    .attr("rx", 12)
-                    .attr("stroke", "#e2e8f0")
-                    .attr("stroke-width", 1);
-
                 svg.append("text")
                     .attr("x", label.x)
                     .attr("y", label.y)
                     .attr("text-anchor", "middle")
-                    .attr("fill", "#2d3748")
-                    .attr("font-size", "14")
+                    .attr("fill", "white")
+                    .attr("font-size", "16")
                     .attr("font-weight", "700")
                     .attr("text-transform", "uppercase")
                     .attr("letter-spacing", "1px")
+                    .style("text-shadow", "0 2px 4px rgba(0,0,0,0.3)")
                     .text(label.text);
             });
 
             // Add ring labels
             const ringLabels = ["ADOPT", "TRIAL", "ASSESS", "HOLD"];
+            const ringColors = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444"];
             ringLabels.forEach((label, index) => {
                 const radius = rings[index] * maxRadius;
-                const textBg = svg.append("rect")
-                    .attr("x", centerX + 8)
-                    .attr("y", centerY - radius - 12)
-                    .attr("width", label.length * 7 + 16)
-                    .attr("height", 24)
-                    .attr("fill", "rgba(255,255,255,0.95)")
-                    .attr("rx", 12)
-                    .attr("stroke", radarData.rings[index].color)
-                    .attr("stroke-width", 2);
-
+                
                 svg.append("text")
                     .attr("x", centerX + 16)
                     .attr("y", centerY - radius + 4)
-                    .attr("fill", radarData.rings[index].color)
-                    .attr("font-size", "13")
+                    .attr("fill", ringColors[index])
+                    .attr("font-size", "14")
                     .attr("font-weight", "700")
-                    .attr("letter-spacing", "0.5px")
+                    .attr("letter-spacing", "1px")
+                    .style("text-shadow", "0 1px 3px rgba(0,0,0,0.5)")
                     .text(label);
             });
 
@@ -1005,23 +987,33 @@
                 
                 const ringColor = radarData.rings[ringIndex].color;
                 
+                // Add technology dot with AOE-style colors
+                const dotColors = {
+                    'adopt': '#10b981',    // emerald-500
+                    'trial': '#3b82f6',    // blue-500  
+                    'assess': '#f59e0b',   // amber-500
+                    'hold': '#ef4444'      // red-500
+                };
+                
+                const dotColor = dotColors[tech.ring] || ringColor;
+                
                 // Add technology dot with enhanced styling
                 const dot = svg.append("circle")
                     .attr("cx", x)
                     .attr("cy", y)
                     .attr("r", 0)
-                    .attr("fill", ringColor)
+                    .attr("fill", dotColor)
                     .attr("stroke", "white")
-                    .attr("stroke-width", 3)
+                    .attr("stroke-width", 2)
                     .style("cursor", "pointer")
-                    .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.2))")
+                    .style("filter", "drop-shadow(0 2px 6px rgba(0,0,0,0.4))")
                     .on("click", () => showTechDetails(tech))
                     .on("mouseover", function(event) {
                         d3.select(this)
                             .transition()
                             .duration(200)
                             .attr("r", 12)
-                            .attr("stroke-width", 4);
+                            .attr("stroke-width", 3);
                         showTooltip(tech, event.pageX, event.pageY);
                     })
                     .on("mouseout", function() {
@@ -1029,9 +1021,9 @@
                             .transition()
                             .duration(200)
                             .attr("r", 8)
-                            .attr("stroke-width", 3);
+                            .attr("stroke-width", 2);
                         hideTooltip();
-                    });
+                    });;
 
                 // Animate dot appearance
                 dot.transition()
@@ -1067,15 +1059,22 @@
 
             list.innerHTML = '';
             
+            const dotColors = {
+                'adopt': '#10b981',
+                'trial': '#3b82f6', 
+                'assess': '#f59e0b',
+                'hold': '#ef4444'
+            };
+            
             radarData.technologies.forEach((tech, index) => {
-                const ringColor = radarData.rings.find(r => r.id === tech.ring).color;
+                const dotColor = dotColors[tech.ring];
                 
                 const item = document.createElement('div');
                 item.className = 'tech-item';
                 item.onclick = () => showTechDetails(tech);
                 
                 item.innerHTML = `
-                    <div class="tech-number" style="background-color: ${ringColor};">${index + 1}</div>
+                    <div class="tech-number" style="background-color: ${dotColor};">${index + 1}</div>
                     <div>
                         <div style="font-weight: 600; color: #2d3748;">${tech.name}</div>
                         <div style="font-size: 0.8rem; color: #718096;">${tech.ring.toUpperCase()}</div>
