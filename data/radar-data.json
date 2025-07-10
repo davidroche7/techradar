@@ -1,0 +1,98 @@
+{
+  "title": "Technology Radar",
+  "date": "2025-01",
+  "quadrants": [
+    { "name": "Platforms", "id": "platforms" },
+    { "name": "Tools", "id": "tools" },
+    { "name": "Techniques", "id": "techniques" },
+    { "name": "Languages & Frameworks", "id": "languages" }
+  ],
+  "rings": [
+    { "name": "ADOPT", "id": "adopt", "color": "#48bb78" },
+    { "name": "TRIAL", "id": "trial", "color": "#4299e1" },
+    { "name": "ASSESS", "id": "assess", "color": "#ed8936" },
+    { "name": "HOLD", "id": "hold", "color": "#f56565" }
+  ],
+  "technologies": [
+    {
+      "name": "Kubernetes",
+      "quadrant": "platforms",
+      "ring": "adopt",
+      "description": "Container orchestration platform for scalable deployments",
+      "rationale": "Proven in production across multiple teams. Strong ecosystem and community support.",
+      "moved": 0
+    },
+    {
+      "name": "Docker",
+      "quadrant": "platforms",
+      "ring": "adopt",
+      "description": "Application containerization platform",
+      "rationale": "Standard for application packaging and deployment across all teams.",
+      "moved": 0
+    },
+    {
+      "name": "Serverless Framework",
+      "quadrant": "platforms",
+      "ring": "trial",
+      "description": "Framework for building serverless applications",
+      "rationale": "Showing promise for event-driven workloads. Evaluating cost and performance characteristics.",
+      "moved": 1
+    },
+    {
+      "name": "Terraform",
+      "quadrant": "tools",
+      "ring": "adopt",
+      "description": "Infrastructure as Code tool",
+      "rationale": "Standardized across all cloud deployments. Mature tooling and strong community.",
+      "moved": 0
+    },
+    {
+      "name": "Pulumi",
+      "quadrant": "tools",
+      "ring": "trial",
+      "description": "Modern Infrastructure as Code using familiar programming languages",
+      "rationale": "Alternative to Terraform with better developer experience. Evaluating for complex deployments.",
+      "moved": 1
+    },
+    {
+      "name": "Ansible",
+      "quadrant": "tools",
+      "ring": "assess",
+      "description": "Configuration management and automation tool",
+      "rationale": "Evaluating for configuration management needs. Comparing with cloud-native alternatives.",
+      "moved": 0
+    },
+    {
+      "name": "TypeScript",
+      "quadrant": "languages",
+      "ring": "adopt",
+      "description": "Typed superset of JavaScript",
+      "rationale": "Standard for all new JavaScript projects. Significantly improves code quality and maintainability.",
+      "moved": 0
+    },
+    {
+      "name": "Rust",
+      "quadrant": "languages",
+      "ring": "trial",
+      "description": "Systems programming language focusing on safety and performance",
+      "rationale": "Promising for high-performance components. Small team experimenting with game engine components.",
+      "moved": 1
+    },
+    {
+      "name": "Microservices Architecture",
+      "quadrant": "techniques",
+      "ring": "adopt",
+      "description": "Architectural pattern for building scalable, distributed applications",
+      "rationale": "Proven approach for our scale. Well-understood patterns and tooling available.",
+      "moved": 0
+    },
+    {
+      "name": "Event Sourcing",
+      "quadrant": "techniques",
+      "ring": "trial",
+      "description": "Data persistence pattern using event streams",
+      "rationale": "Valuable for audit trails and complex domain models. Evaluating complexity vs. benefits.",
+      "moved": 1
+    }
+  ]
+}
