@@ -1,3 +1,15 @@
+let radarData = null;
+
+async function loadRadarData() {
+    try {
+        const response = await fetch('data/radar-data.json');
+        radarData = await response.json();
+        renderRadar();
+    } catch (error) {
+        console.error('Error loading radar data:', error);
+    }
+}
+
 function renderRadar() {
     if (!radarData) return;
 
@@ -74,71 +86,6 @@ function renderRadar() {
         { text: "Tools", x: centerX - maxRadius/1.5, y: 40 },
         { text: "Techniques", x: centerX - maxRadius/1.5, y: height - 20 },
         { text: "Languages", x: centerX + maxRadius/1.5, y: height - 20 }
-    ];
-
-    quadrantLabels.forEach(let radarData = null;
-
-async function loadRadarData() {
-    try {
-        const response = await fetch('data/radar-data.json');
-        radarData = await response.json();
-        renderRadar();
-    } catch (error) {
-        console.error('Error loading radar data:', error);
-    }
-}
-
-function renderRadar() {
-    if (!radarData) return;
-
-    const container = d3.select("#radar-chart");
-    container.selectAll("*").remove();
-
-    const width = 600;
-    const height = 600;
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const maxRadius = Math.min(width, height) / 2 - 40;
-
-    const svg = container.append("svg")
-        .attr("width", width)
-        .attr("height", height);
-
-    // Draw rings
-    const rings = [0.25, 0.5, 0.75, 1.0];
-    rings.forEach((ring, index) => {
-        svg.append("circle")
-            .attr("cx", centerX)
-            .attr("cy", centerY)
-            .attr("r", ring * maxRadius)
-            .attr("fill", "none")
-            .attr("stroke", "#e2e8f0")
-            .attr("stroke-width", 2);
-    });
-
-    // Draw quadrant lines
-    svg.append("line")
-        .attr("x1", centerX)
-        .attr("y1", 0)
-        .attr("x2", centerX)
-        .attr("y2", height)
-        .attr("stroke", "#e2e8f0")
-        .attr("stroke-width", 2);
-
-    svg.append("line")
-        .attr("x1", 0)
-        .attr("y1", centerY)
-        .attr("x2", width)
-        .attr("y2", centerY)
-        .attr("stroke", "#e2e8f0")
-        .attr("stroke-width", 2);
-
-    // Add quadrant labels
-    const quadrantLabels = [
-        { text: "Platforms", x: centerX + maxRadius/2, y: 30 },
-        { text: "Tools", x: centerX - maxRadius/2, y: 30 },
-        { text: "Techniques", x: centerX - maxRadius/2, y: height - 10 },
-        { text: "Languages", x: centerX + maxRadius/2, y: height - 10 }
     ];
 
     quadrantLabels.forEach(label => {
