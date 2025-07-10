@@ -47,11 +47,11 @@
       "moved": 0
     },
     {
-      "name": "Pulumi",
+      "name": "ArgoCD",
       "quadrant": "tools",
       "ring": "trial",
-      "description": "Modern Infrastructure as Code using familiar programming languages",
-      "rationale": "Alternative to Terraform with better developer experience. Evaluating for complex deployments.",
+      "description": "a Kubernetes-native continuous deployment (CD) tool that automates the deployment of applications based on Git repositories",
+      "rationale": "Evaluating for kubernetes deployments.",
       "moved": 1
     },
     {
