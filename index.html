@@ -458,19 +458,19 @@
                         <div class="legend-section">
                             <div class="legend-title">Rings</div>
                             <div class="legend-item" onclick="filterAssetsByStatus('adopt')">
-                                <div class="legend-dot" style="background-color: #48bb78;"></div>
+                                <div class="legend-dot" style="background-color: #10b981;"></div>
                                 <span>ADOPT - Proven and mature</span>
                             </div>
                             <div class="legend-item" onclick="filterAssetsByStatus('trial')">
-                                <div class="legend-dot" style="background-color: #4299e1;"></div>
+                                <div class="legend-dot" style="background-color: #3b82f6;"></div>
                                 <span>TRIAL - Ready for use</span>
                             </div>
                             <div class="legend-item" onclick="filterAssetsByStatus('assess')">
-                                <div class="legend-dot" style="background-color: #ed8936;"></div>
+                                <div class="legend-dot" style="background-color: #f59e0b;"></div>
                                 <span>ASSESS - Worth exploring</span>
                             </div>
                             <div class="legend-item" onclick="filterAssetsByStatus('hold')">
-                                <div class="legend-dot" style="background-color: #f56565;"></div>
+                                <div class="legend-dot" style="background-color: #ef4444;"></div>
                                 <span>HOLD - Proceed with caution</span>
                             </div>
                         </div>
@@ -525,337 +525,29 @@
     </div>
 
     <script>
-        // Embedded data for GitHub Pages compatibility
-        const radarData = {
-            "title": "Technology Radar",
-            "date": "2025-01",
-            "quadrants": [
-                { "name": "Platforms", "id": "platforms" },
-                { "name": "Tools", "id": "tools" },
-                { "name": "Techniques", "id": "techniques" },
-                { "name": "Languages & Frameworks", "id": "languages" }
-            ],
-            "rings": [
-                { "name": "ADOPT", "id": "adopt", "color": "#48bb78" },
-                { "name": "TRIAL", "id": "trial", "color": "#4299e1" },
-                { "name": "ASSESS", "id": "assess", "color": "#ed8936" },
-                { "name": "HOLD", "id": "hold", "color": "#f56565" }
-            ],
-            "technologies": [
-                {
-                    "name": "Kubernetes",
-                    "quadrant": "platforms",
-                    "ring": "adopt",
-                    "description": "Container orchestration platform for scalable deployments",
-                    "rationale": "Proven in production across multiple teams. Strong ecosystem and community support.",
-                    "moved": 0
-                },
-                {
-                    "name": "Docker",
-                    "quadrant": "platforms",
-                    "ring": "adopt",
-                    "description": "Application containerization platform",
-                    "rationale": "Standard for application packaging and deployment across all teams.",
-                    "moved": 0
-                },
-                {
-                    "name": "Serverless Framework",
-                    "quadrant": "platforms",
-                    "ring": "trial",
-                    "description": "Framework for building serverless applications",
-                    "rationale": "Showing promise for event-driven workloads. Evaluating cost and performance characteristics.",
-                    "moved": 1
-                },
-                {
-                    "name": "Terraform",
-                    "quadrant": "tools",
-                    "ring": "adopt",
-                    "description": "Infrastructure as Code tool",
-                    "rationale": "Standardized across all cloud deployments. Mature tooling and strong community.",
-                    "moved": 0
-                },
-                {
-                    "name": "Pulumi",
-                    "quadrant": "tools",
-                    "ring": "trial",
-                    "description": "Modern Infrastructure as Code using familiar programming languages",
-                    "rationale": "Alternative to Terraform with better developer experience. Evaluating for complex deployments.",
-                    "moved": 1
-                },
-                {
-                    "name": "Ansible",
-                    "quadrant": "tools",
-                    "ring": "assess",
-                    "description": "Configuration management and automation tool",
-                    "rationale": "Evaluating for configuration management needs. Comparing with cloud-native alternatives.",
-                    "moved": 0
-                },
-                {
-                    "name": "TypeScript",
-                    "quadrant": "languages",
-                    "ring": "adopt",
-                    "description": "Typed superset of JavaScript",
-                    "rationale": "Standard for all new JavaScript projects. Significantly improves code quality and maintainability.",
-                    "moved": 0
-                },
-                {
-                    "name": "Rust",
-                    "quadrant": "languages",
-                    "ring": "trial",
-                    "description": "Systems programming language focusing on safety and performance",
-                    "rationale": "Promising for high-performance components. Small team experimenting with game engine components.",
-                    "moved": 1
-                },
-                {
-                    "name": "Go",
-                    "quadrant": "languages",
-                    "ring": "assess",
-                    "description": "Simple, efficient programming language for cloud services",
-                    "rationale": "Evaluating for microservices development. Strong performance and simple deployment model.",
-                    "moved": 1
-                },
-                {
-                    "name": "Microservices Architecture",
-                    "quadrant": "techniques",
-                    "ring": "adopt",
-                    "description": "Architectural pattern for building scalable, distributed applications",
-                    "rationale": "Proven approach for our scale. Well-understood patterns and tooling available.",
-                    "moved": 0
-                },
-                {
-                    "name": "Event Sourcing",
-                    "quadrant": "techniques",
-                    "ring": "trial",
-                    "description": "Data persistence pattern using event streams",
-                    "rationale": "Valuable for audit trails and complex domain models. Evaluating complexity vs. benefits.",
-                    "moved": 1
-                },
-                {
-                    "name": "GraphQL",
-                    "quadrant": "techniques",
-                    "ring": "assess",
-                    "description": "Query language and runtime for APIs",
-                    "rationale": "Potential replacement for REST APIs. Evaluating developer experience and performance.",
-                    "moved": 0
-                }
-            ]
-        };
+        // Load data from JSON files
+        let radarData = null;
+        let assetsData = null;
+        let filteredAssets = [];
 
-        const assetsData = [
-            {
-                "id": "kubernetes",
-                "name": "Kubernetes",
-                "status": "adopt",
-                "category": "platforms",
-                "description": "Container orchestration platform",
-                "systems": [
-                    { "name": "Game Platform API", "version": "1.24.2", "environment": "Production", "lastDeployed": "2025-01-15" },
-                    { "name": "Payment Service", "version": "1.23.1", "environment": "Production", "lastDeployed": "2025-01-10" },
-                    { "name": "User Management", "version": "1.24.2", "environment": "Staging", "lastDeployed": "2025-01-18" }
-                ],
-                "tags": ["containerization", "orchestration", "cloud-native"],
-                "lastUpdated": "2025-01-15",
-                "owner": "Platform Team",
-                "documentation": "https://kubernetes.io/docs/",
-                "supportLevel": "Full Support",
-                "compliance": {
-                    "security": "Compliant",
-                    "licensing": "Open Source",
-                    "dataPrivacy": "Compliant"
-                },
-                "metrics": {
-                    "adoption": "85%",
-                    "incidents": 2,
-                    "uptime": "99.9%"
-                }
-            },
-            {
-                "id": "docker",
-                "name": "Docker",
-                "status": "adopt",
-                "category": "platforms",
-                "description": "Application containerization platform",
-                "systems": [
-                    { "name": "All microservices", "version": "24.0.7", "environment": "Production", "lastDeployed": "2025-01-20" },
-                    { "name": "CI/CD Pipeline", "version": "24.0.7", "environment": "Production", "lastDeployed": "2025-01-19" }
-                ],
-                "tags": ["containerization", "development", "deployment"],
-                "lastUpdated": "2025-01-10",
-                "owner": "DevOps Team",
-                "documentation": "https://docs.docker.com/",
-                "supportLevel": "Full Support",
-                "compliance": {
-                    "security": "Compliant",
-                    "licensing": "Open Source",
-                    "dataPrivacy": "Compliant"
-                },
-                "metrics": {
-                    "adoption": "100%",
-                    "incidents": 1,
-                    "uptime": "99.95%"
-                }
-            },
-            {
-                "id": "terraform",
-                "name": "Terraform",
-                "status": "adopt",
-                "category": "tools",
-                "description": "Infrastructure as Code tool",
-                "systems": [
-                    { "name": "AWS Infrastructure", "version": "1.6.4", "environment": "Production", "lastDeployed": "2025-01-16" },
-                    { "name": "Azure Resources", "version": "1.6.4", "environment": "Production", "lastDeployed": "2025-01-14" }
-                ],
-                "tags": ["infrastructure", "automation", "cloud"],
-                "lastUpdated": "2025-01-12",
-                "owner": "Platform Team",
-                "documentation": "https://terraform.io/docs/",
-                "supportLevel": "Full Support",
-                "compliance": {
-                    "security": "Compliant",
-                    "licensing": "MPL-2.0",
-                    "dataPrivacy": "Compliant"
-                },
-                "metrics": {
-                    "adoption": "90%",
-                    "incidents": 0,
-                    "uptime": "99.99%"
-                }
-            },
-            {
-                "id": "typescript",
-                "name": "TypeScript",
-                "status": "adopt",
-                "category": "languages",
-                "description": "Typed superset of JavaScript",
-                "systems": [
-                    { "name": "Game Platform Frontend", "version": "5.3.3", "environment": "Production", "lastDeployed": "2025-01-18" },
-                    { "name": "Admin Dashboard", "version": "5.2.2", "environment": "Production", "lastDeployed": "2025-01-12" },
-                    { "name": "API Gateway", "version": "5.3.3", "environment": "Production", "lastDeployed": "2025-01-17" }
-                ],
-                "tags": ["javascript", "frontend", "backend", "type-safety"],
-                "lastUpdated": "2025-01-08",
-                "owner": "Development Team",
-                "documentation": "https://typescriptlang.org/docs/",
-                "supportLevel": "Full Support",
-                "compliance": {
-                    "security": "Compliant",
-                    "licensing": "Apache-2.0",
-                    "dataPrivacy": "Compliant"
-                },
-                "metrics": {
-                    "adoption": "95%",
-                    "incidents": 0,
-                    "uptime": "N/A"
-                }
-            },
-            {
-                "id": "serverless",
-                "name": "Serverless Framework",
-                "status": "trial",
-                "category": "platforms",
-                "description": "Framework for building serverless applications",
-                "systems": [
-                    { "name": "Notification Service", "version": "3.35.2", "environment": "Staging", "lastDeployed": "2025-01-19" },
-                    { "name": "Analytics Pipeline", "version": "3.35.2", "environment": "Development", "lastDeployed": "2025-01-20" }
-                ],
-                "tags": ["serverless", "aws-lambda", "cloud-functions"],
-                "lastUpdated": "2025-01-14",
-                "owner": "Architecture Team",
-                "documentation": "https://serverless.com/framework/docs/",
-                "supportLevel": "Limited Support",
-                "compliance": {
-                    "security": "Under Review",
-                    "licensing": "MIT",
-                    "dataPrivacy": "Compliant"
-                },
-                "metrics": {
-                    "adoption": "15%",
-                    "incidents": 3,
-                    "uptime": "98.5%"
-                }
-            },
-            {
-                "id": "rust",
-                "name": "Rust",
-                "status": "trial",
-                "category": "languages",
-                "description": "Systems programming language focusing on safety and performance",
-                "systems": [
-                    { "name": "Game Engine Components", "version": "1.74.1", "environment": "Development", "lastDeployed": "2025-01-16" },
-                    { "name": "High-Performance API", "version": "1.74.1", "environment": "Staging", "lastDeployed": "2025-01-18" }
-                ],
-                "tags": ["systems", "performance", "memory-safety"],
-                "lastUpdated": "2025-01-16",
-                "owner": "Game Development Team",
-                "documentation": "https://doc.rust-lang.org/",
-                "supportLevel": "Community Support",
-                "compliance": {
-                    "security": "Compliant",
-                    "licensing": "MIT/Apache-2.0",
-                    "dataPrivacy": "Compliant"
-                },
-                "metrics": {
-                    "adoption": "10%",
-                    "incidents": 1,
-                    "uptime": "99.2%"
-                }
-            },
-            {
-                "id": "microservices",
-                "name": "Microservices Architecture",
-                "status": "adopt",
-                "category": "techniques",
-                "description": "Architectural pattern for building scalable, distributed applications",
-                "systems": [
-                    { "name": "Game Platform", "version": "N/A", "environment": "Production", "lastDeployed": "2025-01-20" },
-                    { "name": "Payment System", "version": "N/A", "environment": "Production", "lastDeployed": "2025-01-18" },
-                    { "name": "User Management System", "version": "N/A", "environment": "Production", "lastDeployed": "2025-01-15" }
-                ],
-                "tags": ["architecture", "scalability", "distributed-systems"],
-                "lastUpdated": "2025-01-05",
-                "owner": "Architecture Team",
-                "documentation": "https://microservices.io/",
-                "supportLevel": "Full Support",
-                "compliance": {
-                    "security": "Compliant",
-                    "licensing": "N/A",
-                    "dataPrivacy": "Compliant"
-                },
-                "metrics": {
-                    "adoption": "80%",
-                    "incidents": 2,
-                    "uptime": "99.8%"
-                }
-            },
-            {
-                "id": "event-sourcing",
-                "name": "Event Sourcing",
-                "status": "trial",
-                "category": "techniques",
-                "description": "Data persistence pattern using event streams",
-                "systems": [
-                    { "name": "Audit Trail System", "version": "N/A", "environment": "Staging", "lastDeployed": "2025-01-17" },
-                    { "name": "Game State Management", "version": "N/A", "environment": "Development", "lastDeployed": "2025-01-19" }
-                ],
-                "tags": ["data-persistence", "audit", "event-driven"],
-                "lastUpdated": "2025-01-20",
-                "owner": "Architecture Team",
-                "documentation": "https://eventstore.com/",
-                "supportLevel": "Limited Support",
-                "compliance": {
-                    "security": "Under Review",
-                    "licensing": "N/A",
-                    "dataPrivacy": "Under Review"
-                },
-                "metrics": {
-                    "adoption": "5%",
-                    "incidents": 0,
-                    "uptime": "99.5%"
-                }
+        async function loadData() {
+            try {
+                const [radarResponse, assetsResponse] = await Promise.all([
+                    fetch('data/radar-data.json'),
+                    fetch('data/assets-data.json')
+                ]);
+                
+                radarData = await radarResponse.json();
+                const assets = await assetsResponse.json();
+                assetsData = assets.assets;
+                filteredAssets = [...assetsData];
+                
+                renderRadar();
+                renderAssets();
+            } catch (error) {
+                console.error('Error loading data:', error);
             }
-        ];
-
-        let filteredAssets = [...assetsData];
+        }
 
         // Radar rendering functions
         function renderRadar() {
@@ -985,8 +677,6 @@
                 const x = centerX + radius * Math.cos(angle);
                 const y = centerY + radius * Math.sin(angle);
                 
-                const ringColor = radarData.rings[ringIndex].color;
-                
                 // Add technology dot with AOE-style colors
                 const dotColors = {
                     'adopt': '#10b981',    // emerald-500
@@ -995,7 +685,7 @@
                     'hold': '#ef4444'      // red-500
                 };
                 
-                const dotColor = dotColors[tech.ring] || ringColor;
+                const dotColor = dotColors[tech.ring];
                 
                 // Add technology dot with enhanced styling
                 const dot = svg.append("circle")
@@ -1023,7 +713,7 @@
                             .attr("r", 8)
                             .attr("stroke-width", 2);
                         hideTooltip();
-                    });;
+                    });
 
                 // Animate dot appearance
                 dot.transition()
@@ -1394,8 +1084,7 @@
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
-            renderRadar();
-            renderAssets();
+            loadData();
         });
     </script>
 </body>
